@@ -32,7 +32,7 @@ var main = function () {
                 map: colorMapEarth
             });
         };
-        colorMapEarth.src = "https://www.solarsystemscope.com/images/textures/full/2k_mercury.jpg";
+        colorMapEarth.src = "earth.jpg";
 
 
 //        var colorMapEarth = new THREE.TextureLoader().load("https://www.solarsystemscope.com/images/textures/full/2k_earth_daymap.jpg");
