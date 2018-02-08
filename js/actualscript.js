@@ -31,6 +31,10 @@ var main = function () {
                 //shininess: 15,
                 map: colorMapEarth
             });
+        earth = new THREE.Mesh(geomSphere, matEarth);
+        earth.position.x = 0;
+        earth.position.y = 0;
+        scene.add(earth);
         };
         colorMapEarth.src = "earth.jpg";
 
@@ -75,10 +79,7 @@ var main = function () {
         ship.position.x = 0;
         ship.position.y = -4.5;
         scene.add(ship);
-        earth = new THREE.Mesh(geomSphere, matEarth);
-        earth.position.x = 0;
-        earth.position.y = 0;
-        scene.add(earth);
+
 
 
         //light
