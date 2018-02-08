@@ -73,7 +73,7 @@ var main = function () {
         earth.position.y = 0;
         scene.add(earth);
 
-
+ 
         //light
 		renderer.gammaInput = true;
 		renderer.gammaOutput = true;
