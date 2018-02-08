@@ -32,12 +32,19 @@ var main = function () {
                 map: colorMapEarth
             });
         };
-        colorMapEarth.src =  "earth.jpg";
+        colorMapEarth.src = "earth.jpg";
 
-        //  var colorMapEarth = new THREE.TextureLoader().load("https://www.solarsystemscope.com/images/textures/full/2k_earth_daymap.jpg");
+
+//        var colorMapEarth = new THREE.TextureLoader().load("https://www.solarsystemscope.com/images/textures/full/2k_earth_daymap.jpg");
 
     //materials engineering
         var matShip = new THREE.MeshBasicMaterial({color: 0xffffff});
+        var bismatEarth = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            //specular: 0x333333,
+            //shininess: 15,
+            map: colorMapEarth
+        });
         var matRed = new THREE.MeshBasicMaterial({color: 0xff0000});
         var matGreen = new THREE.MeshBasicMaterial({color: 0x00ff00});
         var matBlue = new THREE.MeshBasicMaterial({color: 0x0000ff});
@@ -73,7 +80,7 @@ var main = function () {
         earth.position.y = 0;
         scene.add(earth);
 
- 
+
         //light
 		renderer.gammaInput = true;
 		renderer.gammaOutput = true;
