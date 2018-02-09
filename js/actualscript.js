@@ -25,7 +25,7 @@ var main = function () {
     //depicting of the genesis
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.001, 200);
-        camera.position.z = 23;
+        camera.position.z = 10;
         renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
