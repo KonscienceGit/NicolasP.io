@@ -25,7 +25,8 @@ var main = function () {
     //depicting of the genesis
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.001, 200);
-        camera.position.z = 5;
+        camera.position.z = 2.5;
+
         renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
@@ -34,8 +35,9 @@ var main = function () {
     //images and textures
     var textureLoader = new THREE.TextureLoader();//https://www.solarsystemscope.com/images/textures/full/2k_earth_daymap.jpg
     var colorMapEarth = textureLoader.load("earth.jpg");
-    var normalMapEarth = textureLoader.load("earth_normal_map.tif");
-    var specularMapEarth = textureLoader.load("earth_specular_map.tif");
+    var specularMapEarth = textureLoader.load("earth_specular_map.jpg");
+    var normalMapEarth = textureLoader.load("earth_normal_map.jpg");
+
     var colorMapSkybox = textureLoader.load("milkyway.jpg");
 
 
@@ -45,8 +47,8 @@ var main = function () {
         specular: 0x333333,
         shininess: 15,
         map: colorMapEarth,
-        /*specular: specularMapEarth,
-        normalMap: normalMapEarth*/
+        specularMap: specularMapEarth,
+        normalMap: normalMapEarth
     });
     var matSkybox = new THREE.MeshBasicMaterial({
         map: colorMapSkybox,
@@ -62,7 +64,7 @@ var main = function () {
 
     //geometry
     var geomCube = new THREE.BoxGeometry(1, 1, 1);
-    var geomSphere = new THREE.SphereGeometry (1,24,16);
+    var geomSphere = new THREE.SphereGeometry (1,48,32);
     var geomSkybox = new THREE.SphereGeometry (10,24,16);
 
     //mesh positioning
@@ -91,7 +93,7 @@ var main = function () {
     earth.position.y = 0;
     scene.add(earth);
     sun = new THREE.Mesh(geomSphere, matWhite);
-    sun.position.x = 0;
+    sun.position.x = 10;
     sun.position.y = 0;
     scene.add(sun);
     skybox = new THREE.Mesh(geomSkybox, matSkybox);
@@ -107,6 +109,7 @@ var main = function () {
     //renderer.toneMapping = THREE.ReinhardToneMapping;
     renderer.toneMappingExposure = 2; //affect exposure
     sunlight = new THREE.PointLight( 0xffffff, 1, 50 );
+    sunlight.position.x=10;
     scene.add( sunlight );
     }
 
@@ -114,9 +117,9 @@ var main = function () {
         requestAnimationFrame(animate);
         controls.update();
         time += 1;
-        earth.rotation.y += 0.01;
-        earth.position.x=4*Math.cos(-time/300);
-        earth.position.z=4*Math.sin(-time/300);
+        earth.rotation.y += 0.003;
+        /*earth.position.x=8*Math.cos(-time/800);*/
+        /*earth.position.z=8*Math.sin(-time/800);*/
         skybox.position.x=camera.position.x;
         skybox.position.y=camera.position.y;
         skybox.position.z=camera.position.z;
