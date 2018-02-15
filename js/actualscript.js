@@ -16,7 +16,8 @@ var main = function () {
     var sunlight;
 
 //mesh objects
-    var cornerNE, cornerNW, cornerSE, cornerSW, ship, earth, sun, skybox;
+    var cornerNE, cornerNW, cornerSE, cornerSW, ship, earth, mars, sun, skybox;
+
     init();
 
     animate();
@@ -31,12 +32,22 @@ var main = function () {
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
         controls = new THREE.OrbitControls( camera );
+        //Anisotrop filtering, setting to the max possible
+        var maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
+
 
     //images and textures
     var textureLoader = new THREE.TextureLoader();//https://www.solarsystemscope.com/images/textures/full/2k_earth_daymap.jpg
     var colorMapEarth = textureLoader.load("earth.jpg");
+    colorMapEarth.anisotropy = maxAnisotropy;
     var specularMapEarth = textureLoader.load("earth_specular_map.jpg");
     var normalMapEarth = textureLoader.load("earth_normal_map.jpg");
+    normalMapEarth.anisotropy = maxAnisotropy;
+
+    var colorMapMars = textureLoader.load("mars.jpg");
+    colorMapMars.anisotropy = maxAnisotropy;
+    var normalMapMars = textureLoader.load("mars_normal_map.jpg");
+    colorMapMars.anisotropy = maxAnisotropy;
 
     var colorMapSkybox = textureLoader.load("milkyway.jpg");
 
@@ -45,10 +56,17 @@ var main = function () {
     var matEarth = new THREE.MeshPhongMaterial({
         color: 0xaaaaaa,
         specular: 0x333333,
-        shininess: 15,
+        shininess: 5,
         map: colorMapEarth,
         specularMap: specularMapEarth,
         normalMap: normalMapEarth
+    });
+    var matMars = new THREE.MeshPhongMaterial({
+        color: 0xaaaaaa,
+        specular: 0x000000,
+        shininess: 0,
+        map: colorMapMars,
+        normalMap: normalMapMars
     });
     var matSkybox = new THREE.MeshBasicMaterial({
         map: colorMapSkybox,
@@ -90,8 +108,12 @@ var main = function () {
     scene.add(ship);
     earth = new THREE.Mesh(geomSphere, matEarth);
     earth.position.x = 0;
-    earth.position.y = 0;
+    earth.position.y = 2.5;
     scene.add(earth);
+    mars = new THREE.Mesh(geomSphere, matMars);
+    mars.position.x = 0;
+    mars.position.y = 0;
+    scene.add(mars);
     sun = new THREE.Mesh(geomSphere, matWhite);
     sun.position.x = 10;
     sun.position.y = 0;
@@ -118,6 +140,7 @@ var main = function () {
         controls.update();
         time += 1;
         earth.rotation.y += 0.003;
+        mars.rotation.y += 0.003;
         /*earth.position.x=8*Math.cos(-time/800);*/
         /*earth.position.z=8*Math.sin(-time/800);*/
         skybox.position.x=camera.position.x;
