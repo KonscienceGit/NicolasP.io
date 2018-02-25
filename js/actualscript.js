@@ -1,7 +1,6 @@
 "use strict";
 
 var main = function () {
-
 //engine variables
     var time = 0;
 
@@ -10,7 +9,6 @@ var main = function () {
 
 //camera controls
     var controls
-
 
 //lights
     var sunlight;
@@ -33,42 +31,49 @@ var main = function () {
         controls = new THREE.OrbitControls( camera );
     //Anisotrop filtering, setting to the max possible
         var maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
+        if (maxAnisotropy > 4)
+            maxAnisotropy = 4;
 
     //images and textures
         var textureLoader = new THREE.TextureLoader();//https://www.solarsystemscope.com/images/textures/full/2k_earth_daymap.jpg
-        var colorMapEarth = textureLoader.load("maps/earth.jpg");
+
+    //Earth maps
+    /*    var colorMapEarth = textureLoader.load("maps/earth.jpg");
         colorMapEarth.anisotropy = maxAnisotropy;
         var specularMapEarth = textureLoader.load("maps/earth_specular_map.jpg");
         var normalMapEarth = textureLoader.load("maps/earth_normal_map.jpg");
-        normalMapEarth.anisotropy = maxAnisotropy;
+        normalMapEarth.anisotropy = maxAnisotropy;*/
 
-        var colorMapMars = textureLoader.load("maps/mars.jpg");
+        var colorMapMars = textureLoader.load("maps/mars/mars.jpg");
         colorMapMars.anisotropy = maxAnisotropy;
-        var normalMapMars = textureLoader.load("maps/mars_norm_map.png");
-        colorMapMars.anisotropy = maxAnisotropy;
-        var displacementMapMars = textureLoader.load("maps/mars_disp_map.png");
-        colorMapMars.anisotropy = maxAnisotropy;
+        var normalMapMars = textureLoader.load("maps/mars/A_NRM50.png");
+        normalMapMars.anisotropy = maxAnisotropy;
+        var displacementMapMars = textureLoader.load("maps/mars/displacement.png");
+        displacementMapMars.anisotropy = maxAnisotropy;
 
         var colorMapSkybox = textureLoader.load("maps/milkyway.jpg");
         colorMapSkybox.anisotropy = maxAnisotropy;
 
     //materials engineering
-        var matEarth = new THREE.MeshPhongMaterial({
+        /*var matEarth = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa,
             shininess: 25,
             map: colorMapEarth,
             specularMap: specularMapEarth,
             normalMap: normalMapEarth
-        });
+        });*/
+
         var matMars = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa,
             specular: 0x000000,
             shininess: 0,
             map: colorMapMars,
             normalMap: normalMapMars,
+            normalScale: THREE.Vector2(0.5,0.5),
             displacementMap: displacementMapMars,
-            displacementScale: 0.1
+            displacementScale: 0.08
         });
+
         var matSkybox = new THREE.MeshBasicMaterial({
             map: colorMapSkybox,
             side: THREE.BackSide
@@ -79,14 +84,14 @@ var main = function () {
 
     //geometry
         var geomCube = new THREE.BoxGeometry(1, 1, 1);
-        var geomSphere = new THREE.SphereGeometry (1,300,200);
+        var geomSphere = new THREE.SphereGeometry (1,600,400);
         var geomSkybox = new THREE.SphereGeometry (10,24,16);
 
     //mesh positioning
-        earth = new THREE.Mesh(geomSphere, matEarth);
+    /*    earth = new THREE.Mesh(geomSphere, matEarth);
         earth.position.x = 0;
         earth.position.y = 2.5;
-        scene.add(earth);
+        scene.add(earth);*/
         mars = new THREE.Mesh(geomSphere, matMars);
         mars.position.x = 0;
         mars.position.y = 0;
@@ -110,13 +115,16 @@ var main = function () {
         sunlight = new THREE.PointLight( 0xffffff, 1, 50 );
         sunlight.position.x=10;
         scene.add( sunlight );
+
+    //Even called on window resizing
+        window.addEventListener( 'resize', onWindowResize, false );
     }
 
     function animate() {
         requestAnimationFrame(animate);
         controls.update();
         time += 1;
-        earth.rotation.y += 0.003;
+        /*earth.rotation.y += 0.003;*/
         mars.rotation.y += 0.003;
         /*earth.position.x=8*Math.cos(-time/800);*/
         /*earth.position.z=8*Math.sin(-time/800);*/
@@ -125,5 +133,12 @@ var main = function () {
         skybox.position.z=camera.position.z;
 
         renderer.render(scene, camera);
+    }
+
+    //when window is resized, event listenner call this function
+    function onWindowResize() {
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+		renderer.setSize( window.innerWidth, window.innerHeight );
     }
 };
