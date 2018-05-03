@@ -97,7 +97,7 @@ var main = function () {
                 loadingGroup.add( loadingBar );
                 renderer.render(scene, camera);
                 var loader = new THREE.FontLoader(textManager);
-                loader.load( "../lib/font/CyberspaceRacewayBack.json", function ( font ) {
+                loader.load( "CyberspaceRacewayBack.json", function ( font ) {
                     textGeometry = new THREE.TextGeometry( "LOADING...", {
                         font: font,
                         size: 0.4,
