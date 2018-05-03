@@ -128,10 +128,13 @@ var main = function () {
                 scene.add(loadingBlock4);
             } break;
             case 4:{
-                var loadingBlock5 = new THREE.Mesh(geomCube, matMetal);
-                loadingBlock5.position.x = 2;
-                loadingBlock5.position.z = 1.2;
-                scene.add(loadingBlock5);
+                loadingBlock1.visible = false;
+                loadingBlock2.visible = false;
+                loadingBlock3.visible = false;
+                loadingBlock4.visible = false;
+                loadingText.visible = false;
+                loadingBar.visible = false;
+                
             } break;
             default: {console.log("Loading Switch Case hit an exception!");}
             break;
