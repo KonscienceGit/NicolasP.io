@@ -30,6 +30,7 @@ var main = function () {
     var geomBar;
     var oldVM = 0;
     var textGeometry;
+    var loadingGroup;
 
 //mesh objects
     var mars;
@@ -77,7 +78,7 @@ var main = function () {
     geomBar = new THREE.BoxGeometry(5, 0.05, 0.1);
 
     //loadingscreen items
-    var loadingGroup = new THREE.Group();
+    loadingGroup = new THREE.Group();
     scene.add(loadingGroup);
 
     loadingScreen( 0 );
