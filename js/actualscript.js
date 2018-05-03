@@ -31,6 +31,9 @@ var main = function () {
     var oldVM = 0;
     var textGeometry;
     var loadingGroup;
+    var geomSegBar = new THREE.BoxGeometry(0.98, 0.2, 0.1);
+    var geomBar = new THREE.BoxGeometry(5, 0.05, 0.1);
+    var geomSkybox = new THREE.SphereGeometry (1,24,16);
 
 //mesh objects
     var mars;
