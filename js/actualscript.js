@@ -76,68 +76,72 @@ var main = function () {
     geomCube = new THREE.BoxGeometry(0.98, 0.2, 0.1);
     geomBar = new THREE.BoxGeometry(5, 0.05, 0.1);
 
+    //loadingscreen items
+    var loadingGroup = new THREE.Group();
+    scene.add(loadingGroup);
+
     loadingScreen( 0 );
     }
 
     function loadingScreen( stage ) {
         switch (stage) {
             case 0:{
+                var loadingBar = new THREE.Mesh(geomBar, matMetal);
+                loadingBar.position.x = 0;
+                loadingBar.position.y = -0.15;
+                loadingBar.position.z = 1.2;
+                loadingGroup.add( loadingBar );
+                renderer.render(scene, camera);
                 var loader = new THREE.FontLoader(textManager);
-                loader.load( "CyberspaceRacewayBack.json", function ( font ) {
-                	textGeometry = new THREE.TextGeometry( "LOADING...", {
-                		font: font,
-                		size: 0.4,
-                		height: 0.15,
-                		curveSegments: 12
-                	} );
+                loader.load( "../lib/font/CyberspaceRacewayBack.json", function ( font ) {
+                    textGeometry = new THREE.TextGeometry( "LOADING...", {
+                        font: font,
+                        size: 0.4,
+                        height: 0.15,
+                        curveSegments: 12
+                    } );
                 } );
                 textManager.onLoad = function ( ) {
                     var loadingText = new THREE.Mesh(textGeometry, matMetal);
                     loadingText.position.x = -2;
                     loadingText.position.y = 0.3;
                     loadingText.position.z = 1;
-                    scene.add(loadingText);
-                    var loadingBlock1 = new THREE.Mesh(geomCube, matMetal);
+                    var loadingBlock1 = new THREE.Mesh(geomSegBar, matMetal);
                     loadingBlock1.position.x = -2;
                     loadingBlock1.position.z = 1.2;
-                    var loadingBar = new THREE.Mesh(geomBar, matMetal);
-                    loadingBar.position.x = 0;
-                    loadingBar.position.y = -0.15;
-                    loadingBar.position.z = 1.2;
-                    scene.add(loadingBlock1);
-                    scene.add(loadingBar);
+                    loadingGroup.add( loadingText );
+                    loadingGroup.add( loadingBlock1 );
                     renderer.render(scene, camera);
                 };
             } break;
             case 1:{
-                var loadingBlock2 = new THREE.Mesh(geomCube, matMetal);
+                var loadingBlock2 = new THREE.Mesh(geomSegBar, matMetal);
                 loadingBlock2.position.x = -1;
                 loadingBlock2.position.z = 1.2;
-                scene.add(loadingBlock2);
+                loadingGroup.add( loadingBlock2 );
             } break;
             case 2:{
-                var loadingBlock3 = new THREE.Mesh(geomCube, matMetal);
+                var loadingBlock3 = new THREE.Mesh(geomSegBar, matMetal);
                 loadingBlock3.position.x = 0;
                 loadingBlock3.position.z = 1.2;
-                scene.add(loadingBlock3);
+                loadingGroup.add( loadingBlock3 );
             } break;
             case 3:{
-                var loadingBlock4 = new THREE.Mesh(geomCube, matMetal);
+                var loadingBlock4 = new THREE.Mesh(geomSegBar, matMetal);
                 loadingBlock4.position.x = 1;
                 loadingBlock4.position.z = 1.2;
-                scene.add(loadingBlock4);
+                loadingGroup.add( loadingBlock4 );
             } break;
             case 4:{
-                scene.remove(loadingBlock1);
-                scene.remove(loadingBlock2);
-                scene.remove(loadingBlock3);
-                scene.remove(loadingBlock4);
-                scene.remove(loadingBar);
-                scene.remove(loadingText);
-                
+                var loadingBlock5 = new THREE.Mesh(geomSegBar, matMetal);
+                loadingBlock5.position.x = 2;
+                loadingBlock5.position.z = 1.2;
+                loadingGroup.add( loadingBlock5 );
+                loadingGroup.visible = false;
             } break;
-            default: {console.log("Loading Switch Case hit an exception!");}
-            break;
+            default: {
+                console.log("Loading Switch Case hit an exception!");
+            }
         }
         renderer.render(scene, camera);
     }
