@@ -128,12 +128,12 @@ var main = function () {
                 scene.add(loadingBlock4);
             } break;
             case 4:{
-                loadingBlock1.visible = false;
-                loadingBlock2.visible = false;
-                loadingBlock3.visible = false;
-                loadingBlock4.visible = false;
-                loadingText.visible = false;
-                loadingBar.visible = false;
+                scene.remove(loadingBlock1);
+                scene.remove(loadingBlock2);
+                scene.remove(loadingBlock3);
+                scene.remove(loadingBlock4);
+                scene.remove(loadingBar);
+                scene.remove(loadingText);
                 
             } break;
             default: {console.log("Loading Switch Case hit an exception!");}
